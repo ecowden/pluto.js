@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jasmine Test Runner</title>
+
+    <!-- Jasmine -->
+    <link rel="stylesheet" type="text/css" href="jasmine/jasmine.css"/>
+    <link rel="icon" type="image/png" href="jasmine/jasmine_favicon.png">
+    <script type="text/javascript" src="jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/jasmine.console_reporter.js"></script>
+
+    <!-- RequireJS -->
+    <script type="text/javascript" src="lib/require.min.js"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+    //noinspection JSUnresolvedFunction
+    require.config({
+        paths: {
+            "underscore": "lib/underscore",
+            "Module": "../src/Module"
+        }
+    });
+
+    require([
+        "Module.spec"
+    ], function () {
+        var jasmineEnv = jasmine.getEnv();
+        jasmineEnv.updateInterval = 1000;
+
+        var htmlReporter = new jasmine.HtmlReporter();
+        jasmine.getEnv().addReporter(htmlReporter);
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+
+        jasmineEnv.specFilter = function (spec) {
+            return htmlReporter.specFilter(spec);
+        };
+
+        var currentWindowOnload = window.onload;
+
+        window.onload = function () {
+            if (currentWindowOnload) {
+                currentWindowOnload();
+            }
+            execJasmine();
+        };
+
+        function execJasmine() {
+            jasmine.getEnv().execute();
+        }
+    });
+</script>
+
+</body>
+</html>
