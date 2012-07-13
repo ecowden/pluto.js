@@ -95,7 +95,7 @@ define([
                         }).toThrow();
                     });
 
-                    it("module.get(name) returns the result from the factory's invocation when the factory has no parameters", function () {
+                    it("when the factory has no parameters, module.get(name) returns the result of the factory's invocation", function () {
                         var expected = {};
                         var factory = function () {
                             return expected;
@@ -145,55 +145,57 @@ define([
                     });
 //
                     it("throws if a mapping with the given name already exists", function () {
-                        var factory = function () {
+                        var Constructor = function () {
                         };
 
                         expect(function () {
                             Module.create(function (bind) {
-                                bind("$injected").toConstructor(factory);
-                                bind("$injected").toConstructor(factory);
+                                bind("$injected").toConstructor(Constructor);
+                                bind("$injected").toConstructor(Constructor);
                             });
                         }).toThrow();
                     });
 
-                    it("throws if the factory is not a function", function () {
+                    it("throws if the constructor is not a function", function () {
                         expect(function () {
                             Module.create(function (bind) {
                                 bind("$injected").toConstructor({});
                             });
                         }).toThrow();
                     });
-//
-//                    it("module.get(name) returns the result from the factory's invocation when the factory has no parameters", function () {
-//                        var expected = {};
-//                        var factory = function () {
-//                            return expected;
-//                        };
-//
-//                        var module = Module.create(function (bind) {
-//                            bind("$injected").toFactory(factory);
-//                        });
-//
-//                        var actual = module.get("$injected");
-//                        expect(actual).toBe(expected);
-//                    });
-//
-//                    it("module.get(name) injects the factory function's parameters, then returns the result from the factory's invocation", function () {
-//                        var expectedParam = {};
-//                        var factory = function ($param) {
-//                            return {
-//                                param: $param
-//                            };
-//                        };
-//
-//                        var module = Module.create(function (bind) {
-//                            bind("$root").toFactory(factory);
-//                            bind("$param").toInstance(expectedParam);
-//                        });
-//
-//                        var actual = module.get("$root");
-//                        expect(actual.param).toBe(expectedParam);
-//                    });
+
+                    it("when the constructor has no parameters, module.get(name) returns the result of new Constructor()", function () {
+                        var Constructor = function () {
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$injected").toConstructor(Constructor);
+                        });
+
+                        var actual = module.get("$injected");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Constructor).toBeTruthy();
+                    });
+
+                    it("when the constructor has one parameter, module.get(name) returns the result of new Constructor() with the parameter injected", function () {
+                        var param = "-- the injected parameter --";
+                        var Root = function ($param) {
+                            this.param = $param;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param").toInstance(param);
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param).toBe(param);
+                    });
+
                 }); // --- / bind(...).toConstructor(...) ---
             });
         });

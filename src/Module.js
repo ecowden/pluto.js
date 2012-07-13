@@ -12,20 +12,37 @@ define([
         return funStr.slice(funStr.indexOf('(') + 1, funStr.indexOf(')')).match(/([^\s,]+)/g);
     };
 
+    function createParameters(module, paramNames) {
+        var params = [];
+        _.each(paramNames, function (paramName) {
+            var param = module.get(paramName);
+            params.push(param);
+        });
+        return params;
+    }
+
     var createFactoryResolver = function (module, factory) {
+
         return function () {
             var paramNames = getParamNames(factory);
             if (!paramNames || paramNames.length === 0) {
                 return factory();
             }
 
-            var params = [];
-            _.each(paramNames, function (paramName) {
-                var param = module.get(paramName);
-                params.push(param);
-            });
-            var result = factory.apply(factory, params);
-            return result;
+            var params = createParameters(module, paramNames);
+            return factory.apply(factory, params);
+        };
+    };
+
+    var createConstructorResolver = function (module, Constructor) {
+        return function () {
+            var paramNames = getParamNames(Constructor);
+            if (!paramNames || paramNames.length === 0) {
+                return new Constructor();
+            }
+
+            var params = createParameters(module, paramNames);
+            return new Constructor(params[0]);
         };
     };
 
@@ -37,7 +54,6 @@ define([
 
     Module.create = function (callback) {
         var module = new Module();
-
 
         callback(function (name) {
             function validateBinding(target) {
@@ -71,7 +87,7 @@ define([
                 toConstructor: function (constructor) {
                     validateBinding(constructor);
                     validateTargetIsAFunction(constructor);
-                    module.namesToResolvers[name] = createFactoryResolver(module, constructor);
+                    module.namesToResolvers[name] = createConstructorResolver(module, constructor);
                 }
             };
         });
