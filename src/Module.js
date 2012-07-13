@@ -34,15 +34,56 @@ define([
         };
     };
 
+    var maxConstructorParameters = 8;
     var createConstructorResolver = function (module, Constructor) {
         return function () {
+            /*
+             * It turns out that dynamically invoking constructor functions is a bit tricky.  I have decided to
+             * manually invoke them for now until I can do further research and choose the best alternative.
+             * For now, constructor injection will be limited to eight parameters.  --EJC
+             */
             var paramNames = getParamNames(Constructor);
             if (!paramNames || paramNames.length === 0) {
                 return new Constructor();
             }
 
+            var paramCount = paramNames.length;
             var params = createParameters(module, paramNames);
-            return new Constructor(params[0]);
+            if (paramCount === 1) {
+                return new Constructor(params[0]);
+            }
+
+            if (paramCount === 2) {
+                return new Constructor(params[0], params[1]);
+            }
+
+            if (paramCount === 3) {
+                return new Constructor(params[0], params[1], params[2]);
+            }
+
+            if (paramCount === 4) {
+                return new Constructor(params[0], params[1], params[2], params[3]);
+            }
+
+            if (paramCount === 5) {
+                return new Constructor(params[0], params[1], params[2], params[3], params[4]);
+            }
+
+            if (paramCount === 6) {
+                return new Constructor(params[0], params[1], params[2], params[3], params[4], params[5]);
+            }
+
+            if (paramCount === 7) {
+                return new Constructor(params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+            }
+
+            if (paramCount === 8) {
+                return new Constructor(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7]);
+            }
+
+            var msg = "Pluto cannot inject constructor functions with " + maxConstructorParameters + " or more parameters " +
+                "at this time (it's a long story).  Please use a non-constructor factory funtion instead or consider injecting fewer dependencies.";
+            throw msg;
         };
     };
 

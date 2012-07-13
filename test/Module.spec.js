@@ -8,7 +8,7 @@ define([
         };
 
         describe("Module.create( ... )", function () {
-            it("calls the first parameter callback with a 'bind' parameter", function () {
+            it("invokes the callback passed as the first parameter with a 'bind' parameter", function () {
                 var actualBind;
 
                 Module.create(function (bind) {
@@ -95,7 +95,7 @@ define([
                         }).toThrow();
                     });
 
-                    it("when the factory has no parameters, module.get(name) returns the result of the factory's invocation", function () {
+                    it("when the factory has zero parameters, module.get(name) returns the result of the factory's invocation", function () {
                         var expected = {};
                         var factory = function () {
                             return expected;
@@ -127,7 +127,7 @@ define([
                     });
                 }); // --- / bind(...).toFactory(...) ---
 
-                describe(".toFactory(factory)", function () {
+                describe(".toConstructor(Constructor)", function () {
                     it("throws if constructor parameter is null", function () {
                         expect(function () {
                             Module.create(function (bind) {
@@ -164,7 +164,7 @@ define([
                         }).toThrow();
                     });
 
-                    it("when the constructor has no parameters, module.get(name) returns the result of new Constructor()", function () {
+                    it("when the constructor has zero parameters, module.get(name) returns the result of new Constructor()", function () {
                         var Constructor = function () {
                         };
 
@@ -179,21 +179,237 @@ define([
                     });
 
                     it("when the constructor has one parameter, module.get(name) returns the result of new Constructor() with the parameter injected", function () {
-                        var param = "-- the injected parameter --";
-                        var Root = function ($param) {
-                            this.param = $param;
+                        var Root = function ($param1) {
+                            this.param1 = $param1;
                         };
 
                         var module = Module.create(function (bind) {
                             bind("$Root").toConstructor(Root);
-                            bind("$param").toInstance(param);
+                            bind("$param1").toInstance("the first injected parameter");
                         });
 
                         var actual = module.get("$Root");
 
                         expect(actual).toBeDefined();
                         expect(actual instanceof Root).toBeTruthy();
-                        expect(actual.param).toBe(param);
+                        expect(actual.param1).toBe("the first injected parameter");
+                    });
+
+                    it("when the constructor has two parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                    });
+
+                    it("when the constructor has three parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                    });
+
+                    it("when the constructor has four parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3, $param4) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                            this.param4 = $param4;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                            bind("$param4").toInstance("the fourth injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                        expect(actual.param4).toBe("the fourth injected parameter");
+                    });
+
+                    it("when the constructor has five parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3, $param4, $param5) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                            this.param4 = $param4;
+                            this.param5 = $param5;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                            bind("$param4").toInstance("the fourth injected parameter");
+                            bind("$param5").toInstance("the fifth injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                        expect(actual.param4).toBe("the fourth injected parameter");
+                        expect(actual.param5).toBe("the fifth injected parameter");
+                    });
+
+                    it("when the constructor has six parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3, $param4, $param5, $param6) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                            this.param4 = $param4;
+                            this.param5 = $param5;
+                            this.param6 = $param6;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                            bind("$param4").toInstance("the fourth injected parameter");
+                            bind("$param5").toInstance("the fifth injected parameter");
+                            bind("$param6").toInstance("the sixth injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                        expect(actual.param4).toBe("the fourth injected parameter");
+                        expect(actual.param5).toBe("the fifth injected parameter");
+                        expect(actual.param6).toBe("the sixth injected parameter");
+                    });
+
+                    it("when the constructor has seven parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                            this.param4 = $param4;
+                            this.param5 = $param5;
+                            this.param6 = $param6;
+                            this.param7 = $param7;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                            bind("$param4").toInstance("the fourth injected parameter");
+                            bind("$param5").toInstance("the fifth injected parameter");
+                            bind("$param6").toInstance("the sixth injected parameter");
+                            bind("$param7").toInstance("the seventh injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                        expect(actual.param4).toBe("the fourth injected parameter");
+                        expect(actual.param5).toBe("the fifth injected parameter");
+                        expect(actual.param6).toBe("the sixth injected parameter");
+                        expect(actual.param7).toBe("the seventh injected parameter");
+                    });
+
+                    it("when the constructor has eight parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
+                        var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8) {
+                            this.param1 = $param1;
+                            this.param2 = $param2;
+                            this.param3 = $param3;
+                            this.param4 = $param4;
+                            this.param5 = $param5;
+                            this.param6 = $param6;
+                            this.param7 = $param7;
+                            this.param8 = $param8;
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                            bind("$param1").toInstance("the first injected parameter");
+                            bind("$param2").toInstance("the second injected parameter");
+                            bind("$param3").toInstance("the third injected parameter");
+                            bind("$param4").toInstance("the fourth injected parameter");
+                            bind("$param5").toInstance("the fifth injected parameter");
+                            bind("$param6").toInstance("the sixth injected parameter");
+                            bind("$param7").toInstance("the seventh injected parameter");
+                            bind("$param8").toInstance("the eighth injected parameter");
+                        });
+
+                        var actual = module.get("$Root");
+
+                        expect(actual).toBeDefined();
+                        expect(actual instanceof Root).toBeTruthy();
+                        expect(actual.param1).toBe("the first injected parameter");
+                        expect(actual.param2).toBe("the second injected parameter");
+                        expect(actual.param3).toBe("the third injected parameter");
+                        expect(actual.param4).toBe("the fourth injected parameter");
+                        expect(actual.param5).toBe("the fifth injected parameter");
+                        expect(actual.param6).toBe("the sixth injected parameter");
+                        expect(actual.param7).toBe("the seventh injected parameter");
+                        expect(actual.param8).toBe("the eighth injected parameter");
+                    });
+
+                    it("when the constructor has nine parameters, module.get(name) throws an exception", function () {
+                        var param = "-- the injected parameter --";
+                        var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {
+                        };
+
+                        var module = Module.create(function (bind) {
+                            bind("$Root").toConstructor(Root);
+                        });
+
+                        expect(function () {
+                            module.get("$Root");
+                        }).toThrow();
                     });
 
                 }); // --- / bind(...).toConstructor(...) ---
