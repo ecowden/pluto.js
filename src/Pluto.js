@@ -93,7 +93,7 @@ define([
     };
 
 
-    Module.create = function (callback) {
+    var createModule = function (callback) {
         var module = new Module();
 
         callback(function (name) {
@@ -144,5 +144,7 @@ define([
         return resolver();
     };
 
-    return Module;
+    return {
+        createModule: createModule
+    };
 });

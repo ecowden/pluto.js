@@ -20,12 +20,12 @@
     require.config({
         paths: {
             "underscore": "lib/underscore",
-            "Module": "../src/Module"
+            "pluto": "../src/pluto"
         }
     });
 
     require([
-        "Module.spec"
+        "spec/pluto.spec.js"
     ], function () {
         var jasmineEnv = jasmine.getEnv();
         jasmineEnv.updateInterval = 1000;
