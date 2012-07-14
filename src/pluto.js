@@ -1,4 +1,4 @@
-(function (window) {
+(function () {
     /*
      * We want to support AMD, CommonJS and plain old script loading.  To to this, we define the bulk of the code in a
      * "factory," then wire it all up appropriately at the end of the script.
@@ -168,6 +168,6 @@
             exports = module.exports = pluto;
         }
     } else { // Plains ol' script-on-a-page (probably...)
-        window.pluto = factory(window._);
+        window.pluto = pluto = factory(window._);
     }
-}(window));
+}());

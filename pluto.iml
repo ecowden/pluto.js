@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Jasmine adapter for JsTestDriver" level="application" />
   </component>
 </module>
 
