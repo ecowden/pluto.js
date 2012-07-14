@@ -1,6 +1,6 @@
 define([
     "underscore",
-    "../../src/_pluto"
+    "../../src/pluto"
 ], function (_, pluto) {
     describe("pluto", function () {
         var Injected = function () {
