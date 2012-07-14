@@ -1,6 +1,7 @@
 define([
+    "underscore",
     "pluto"
-], function (pluto) {
+], function (_, pluto) {
     describe("examples", function () {
 
         it("bind to instance", function () {
