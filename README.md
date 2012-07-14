@@ -18,51 +18,51 @@ There are three things you can bind to a name: an object instance, a constructor
 The simplest binding is to bind a name to an instance:
 
 ```  js
-var myInstance = {}; // can be any JavaScript object
-var module = Module.create(function (bind) {
-  bind("anInstance").to(myInstance);
-};
+var anInstance = {}; // can be any JavaScript object
+var module = pluto.createModule(function (bind) {
+  bind("myInstance").toInstance(anInstance);
+});
 
-var theInstance = module.get("anInstance"); // theInstance is myInstance
+var plutosInstance = module.get("myInstance"); // plutosInstance is anInstance
 ```
 
 You can also bind to a constructor function (i.e., a function that is meant to be used with the "new" keyword to create a new object). When you call module.get(...), Pluto will invoke the Constructor using "new" and return the result. If the constructor has any parameters, Pluto will consult its bindings and pass them into the constructor:
 
 ```  js
-var myGreeting = "Hello, world";
+var aGreeting = "Hello, world!";
 var Greeter = function (greeting) {
-  this.greeting = greeting;
+    this.greeting = greeting;
 };
 
 Greeter.prototype.greet = function () {
-  console.log(this.greeting);
-}
-
-var module = Module.create(function (bind) {
-  bind("greeting").toInstance(myGreeting);
-  bind("greeter").toConstructor(Greeter);
+    return this.greeting;
 };
 
+var module = pluto.createModule(function (bind) {
+    bind("greeting").toInstance(aGreeting);
+    bind("greeter").toConstructor(Greeter);
+});
+
 var theGreeter = module.get("greeter");
-theGreeter.greet(); //prints, "Hello, world!"
+console.log(theGreeter.greet()); //prints, "Hello, world!"
 ```
 
 Similarly, you can bind to a factory function -- that is, a function that creates some other object. When you call module.get(...), Pluto will invoke the function and return the result. Just like with a constructor, if the factory function has any parameters, Pluto will consult its bindings and pass them into the factory:
 
 ```  js
-var myGreeting = "Hello, world";
-var myFactory = function (greeting) {
-  // if this bit of code confuses you, Google, "JavaScript currying." ;-)
-  return function () {
-    console.log(greeting);
-  }
+var aGreeting = "Hello, world!";
+var greeterFactory = function (greeting) {
+    // if this bit of code confuses you, Google, "JavaScript currying." ;-) "JavaScript currying." ;-)
+    return function () {
+        return greeting;
+    };
 };
 
-var module = Module.create(function (bind) {
-  bind("greeting").toInstance(myGreeting);
-  bind("greeter").toFactory(myFactory);
-};
+var module = pluto.createModule(function (bind) {
+    bind("greeting").toInstance(aGreeting);
+    bind("greeter").toFactory(greeterFactory);
+});
 
 var theGreeter = module.get("greeter");
-theGreeter(); //prints, "Hello, world!"
+console.log(theGreeter()); //prints, "Hello, world!"
 ```
