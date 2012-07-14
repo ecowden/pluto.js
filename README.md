@@ -52,7 +52,7 @@ Similarly, you can bind to a factory function -- that is, a function that create
 ```  js
 var aGreeting = "Hello, world!";
 var greeterFactory = function (greeting) {
-    // if this bit of code confuses you, Google, "JavaScript currying." ;-) "JavaScript currying." ;-)
+    // if this bit of code confuses you, Google, "JavaScript currying." ;-)
     return function () {
         return greeting;
     };
