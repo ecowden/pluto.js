@@ -6,6 +6,10 @@
     var factory = function (_, pluto) {
         describe("examples", function () {
 
+            it("should fail (on purpose!)", function () {
+                expect(1).toBe(2);
+            });
+
             it("bind to instance", function () {
                 var anInstance = {}; // can be any JavaScript object
                 var module = pluto.createModule(function (bind) {

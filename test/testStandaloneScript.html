@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="jasmine/jasmine_favicon.png">
     <script type="text/javascript" src="jasmine/jasmine.js"></script>
     <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
-    <script type="text/javascript" src="jasmine/jasmine.console_reporter.js"></script>
+    <script type="text/javascript" src="jasmine/jasmine.teamcity_reporter.js"></script>
 
     <!-- Third-party libraries -->
     <script type="text/javascript" src="lib/underscore.js"></script>
@@ -32,7 +32,7 @@
 
     var htmlReporter = new jasmine.HtmlReporter();
     jasmine.getEnv().addReporter(htmlReporter);
-    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
 
     jasmineEnv.specFilter = function (spec) {
         return htmlReporter.specFilter(spec);
