@@ -5,7 +5,13 @@ var url = phantom.args[0];
 console.log("Test URL: " + url);
 phantom.viewportSize = {width: 800, height: 600};
 //This is required because PhantomJS sandboxes the website and it does not show up the console messages form that page by default
-page.onConsoleMessage = function (msg) { console.log(msg); };
+page.onConsoleMessage = function (msg) {
+    console.log(msg);
+
+    if (msg && msg.indexOf("##jasmine.reportRunnerResults") !== -1) {
+        phantom.exit();
+    }
+};
 //Open the website
 page.open(url, function (status) {
     //Page is loaded!
