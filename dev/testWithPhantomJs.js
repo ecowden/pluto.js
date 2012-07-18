@@ -21,8 +21,8 @@ function escapePathForWindows(path) {
 url = escapePathForWindows(url);
 screenshotFile = escapePathForWindows(screenshotFile);
 
-console.log("Test URL: " + url);
-phantom.viewportSize = {width: 800, height: 600};
+console.log("Test runner URL: " + url);
+console.log("Screenshot file: " + screenshotFile);
 
 function finish() {
     page.render(screenshotFile);
