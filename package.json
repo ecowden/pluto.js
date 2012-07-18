@@ -14,9 +14,11 @@
         "underscore": "1.3.3"
     },
     "devDependencies": {
-        "jasmine-node": "1.0.26"
+        "jasmine-node": "1.0.26",
+        "uglify": "1.3.2"
     },
     "scripts": {
-        "test": "jasmine-node test/spec"
+        "test": "jasmine-node test/spec",
+        "minify": "uglifyjs -o pluto.min.js src/pluto.js"
     }
 }
