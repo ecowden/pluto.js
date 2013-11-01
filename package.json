@@ -9,7 +9,7 @@
         "url": "git://github.com/ecowden/pluto.js.git"
     },
     "main": "lib/pluto.js",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "engines": {
         "node": "*"
     },
