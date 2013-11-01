@@ -120,6 +120,23 @@ describe("pluto", function () {
                     var actual = module.get("$root");
                     expect(actual.param).toBe(expectedParam);
                 });
+
+                it("memoizes invocation so that the factory function is only invoked once", function () {
+                    var invocationCount = 0,
+                        factory = function () {
+                            invocationCount++;
+                            return "dummy";
+                        }
+
+                    var module = pluto.createModule(function (bind) {
+                       bind('$factory').toFactory(factory);
+                    });
+
+                    module.get('$factory');
+                    module.get('$factory');
+
+                    expect(invocationCount).toBe(1);
+                });
             }); // --- / bind(...).toFactory(...) ---
 
             describe(".toConstructor(Constructor)", function () {
@@ -138,7 +155,7 @@ describe("pluto", function () {
                         });
                     }).toThrow();
                 });
-//
+
                 it("throws if a mapping with the given name already exists", function () {
                     var Constructor = function () {
                     };

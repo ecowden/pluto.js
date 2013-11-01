@@ -1,5 +1,6 @@
 {
     "name": "pluto",
+    "version": "0.3.0",
     "description": "Simple JavaScript dependency injection",
     "homepage": "https://github.com/ecowden/pluto.js",
     "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
@@ -9,7 +10,6 @@
         "url": "git://github.com/ecowden/pluto.js.git"
     },
     "main": "lib/pluto.js",
-    "version": "0.2.1",
     "engines": {
         "node": "*"
     },
