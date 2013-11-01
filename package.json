@@ -1,7 +1,7 @@
 {
     "name": "pluto",
-    "version": "0.3.0",
-    "description": "Simple JavaScript dependency injection",
+    "version": "0.4.0",
+    "description": "Dependency injection that's so small, it almost doesn't count.",
     "homepage": "https://github.com/ecowden/pluto.js",
     "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
     "author": "Evan Cowden <evan38109@gmail.com>",
