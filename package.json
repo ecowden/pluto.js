@@ -21,6 +21,6 @@
     },
     "scripts": {
         "test": "jasmine-node test",
-        "autotest": "jasmine-node --autotest test"
+        "autotest": "jasmine-node --autotest ."
     }
 }
