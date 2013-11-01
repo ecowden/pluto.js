@@ -66,3 +66,13 @@ var module = pluto.createModule(function (bind) {
 var theGreeter = module.get("greeter");
 console.log(theGreeter()); //prints, "Hello, world!"
 ```
+
+Injected objects are singletons
+-------------------------------
+
+Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the
+same instance.
+
+Remember that singletons are only singletons within a single module, though. Different module instances -- for instance,
+created for separate test methods -- will each have their own singleton instance.
+
