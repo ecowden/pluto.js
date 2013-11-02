@@ -1,11 +1,42 @@
-Pluto.js: JavaScript Dependency Injection
-=========================================
+Pluto.js
+========
+
+_"JavaScript dependency injection that's so small, it almost doesn't count."_
+
+| Branch        | Status        |
+| ------------- |:-------------:|
+| Master        | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js) |
+| All           | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js) |
 
 What is Pluto?
 --------------
 Pluto is a JavaScript dependency injection tool.
 
 Dependency injection is a spiffy way to assemble your applications. It decouples the various bits and makes your app testable. An introduction to dependency injection principles is currently beyond the scope of this guide.
+
+Installing Pluto
+----------------
+Pluto is designed to be used with [Node](http://nodejs.org/) and [NPM](http://npmjs.org/). From the root of a Node
+project, execute
+
+```
+npm install pluto
+```
+
+Alternately, add a line to the `dependencies` section of your `package.json` and then run `npm install` in your
+project directory.
+
+```
+{
+    "name": "my-awesome-application",
+    "dependencies": {
+        "pluto": "0.4.0"
+    }
+}
+```
+
+_Note: I'll try to keep the above version up to date, but you may want to check the
+[Pluto NPM Page](https://npmjs.org/package/pluto) for the most recent version._
 
 How to Pluto?
 -------------
@@ -77,3 +108,28 @@ same instance.
 Remember that singletons are only singletons within a single module, though. Different module instances -- for instance,
 created for separate test methods -- will each have their own singleton instance.
 
+Lazy vs. Eager Loading
+----------------------
+
+By default, Pluto will only create your objects lazily. That is, factory and constructor functions will only get called
+when you ask for them with `module.get(...)`.
+
+You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions
+which set up Express routes or which perform other application setup.
+
+Invoke `module.eagerlyLoadAll()` after creating your module to eagerly bootstrap your application.
+
+```
+var Constructor = jasmine.createSpy('test Constructor function');
+var factory = jasmine.createSpy('test factory function');
+
+var instance = pluto.createModule(function (bind) {
+    bind('Constructor').toConstructor(Constructor);
+    bind('factory').toFactory(factory);
+});
+
+instance.eagerlyLoadAll();
+
+expect(Constructor).toHaveBeenCalled();
+expect(factory).toHaveBeenCalled();
+```
