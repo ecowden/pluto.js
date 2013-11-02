@@ -28,6 +28,9 @@ project directory.
 }
 ```
 
+_Note: I'll try to keep the above version up to date, but you may want to check the
+[Pluto NPM Page](https://npmjs.org/package/pluto) for the most recent version._
+
 How to Pluto?
 -------------
 A module is the basic unit of Pluto's dependency injection. It maps names to objects you want.
