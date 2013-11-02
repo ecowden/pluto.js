@@ -1,6 +1,14 @@
 Pluto.js: JavaScript Dependency Injection
 =========================================
 
+Master
+
+[![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js)
+
+All Branches
+
+[![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js)
+
 What is Pluto?
 --------------
 Pluto is a JavaScript dependency injection tool.
