@@ -467,7 +467,7 @@ describe("pluto", function () {
                 var factory = jasmine.createSpy('test factory function');
 
                 var instance = pluto.createModule(function (bind) {
-                    bind('Constructor').toFactory(Constructor);
+                    bind('Constructor').toConstructor(Constructor);
                     bind('factory').toFactory(factory);
                 });
 

@@ -7,6 +7,27 @@ Pluto is a JavaScript dependency injection tool.
 
 Dependency injection is a spiffy way to assemble your applications. It decouples the various bits and makes your app testable. An introduction to dependency injection principles is currently beyond the scope of this guide.
 
+Installing Pluto
+----------------
+Pluto is designed to be used with [Node](http://nodejs.org/) and [NPM](http://npmjs.org/). From the root of a Node
+project, execute
+
+```
+npm install pluto
+```
+
+Alternately, add a line to the `dependencies` section of your `package.json` and then run `npm install` in your
+project directory.
+
+```
+{
+    "name": "my-awesome-application",
+    "dependencies": {
+        "pluto": "0.4.0",
+    }
+}
+```
+
 How to Pluto?
 -------------
 A module is the basic unit of Pluto's dependency injection. It maps names to objects you want.
@@ -77,3 +98,28 @@ same instance.
 Remember that singletons are only singletons within a single module, though. Different module instances -- for instance,
 created for separate test methods -- will each have their own singleton instance.
 
+Lazy vs. Eager Loading
+----------------------
+
+By default, Pluto will only create your objects lazily. That is, factory and constructor functions will only get called
+when you ask for them with `module.get(...)`.
+
+You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions
+which set up Express routes or which perform other application setup.
+
+Invoke `module.eagerlyLoadAll()` after creating your module to eagerly bootstrap your application.
+
+```
+var Constructor = jasmine.createSpy('test Constructor function');
+var factory = jasmine.createSpy('test factory function');
+
+var instance = pluto.createModule(function (bind) {
+    bind('Constructor').toConstructor(Constructor);
+    bind('factory').toFactory(factory);
+});
+
+instance.eagerlyLoadAll();
+
+expect(Constructor).toHaveBeenCalled();
+expect(factory).toHaveBeenCalled();
+```
