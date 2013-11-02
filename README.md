@@ -20,10 +20,10 @@ The simplest binding is to bind a name to an instance:
 ```  js
 var anInstance = {}; // can be any JavaScript object
 var module = pluto.createModule(function (bind) {
-  bind("myInstance").toInstance(anInstance);
+    bind("myInstance").toInstance(anInstance);
 });
 
-var plutosInstance = module.get("myInstance"); // plutosInstance is anInstance
+expect(module.get("myInstance")).toBe(anInstance);
 ```
 
 You can also bind to a constructor function (i.e., a function that is meant to be used with the "new" keyword to create a new object). When you call module.get(...), Pluto will invoke the Constructor using "new" and return the result. If the constructor has any parameters, Pluto will consult its bindings and pass them into the constructor:
@@ -44,7 +44,8 @@ var module = pluto.createModule(function (bind) {
 });
 
 var theGreeter = module.get("greeter");
-console.log(theGreeter.greet()); //prints, "Hello, world!"
+
+expect(theGreeter.greet()).toBe("Hello, world!");
 ```
 
 Similarly, you can bind to a factory function -- that is, a function that creates some other object. When you call module.get(...), Pluto will invoke the function and return the result. Just like with a constructor, if the factory function has any parameters, Pluto will consult its bindings and pass them into the factory:
@@ -52,7 +53,6 @@ Similarly, you can bind to a factory function -- that is, a function that create
 ```  js
 var aGreeting = "Hello, world!";
 var greeterFactory = function (greeting) {
-    // if this bit of code confuses you, Google, "JavaScript currying." ;-)
     return function () {
         return greeting;
     };
@@ -64,7 +64,8 @@ var module = pluto.createModule(function (bind) {
 });
 
 var theGreeter = module.get("greeter");
-console.log(theGreeter()); //prints, "Hello, world!"
+
+expect(theGreeter()).toBe("Hello, world!");
 ```
 
 Injected objects are singletons

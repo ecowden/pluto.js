@@ -8,8 +8,7 @@ describe("examples", function () {
             bind("myInstance").toInstance(anInstance);
         });
 
-        var plutosInstance = module.get("myInstance"); // plutosInstance is anInstance
-        expect(plutosInstance).toBe(anInstance);
+        expect(module.get("myInstance")).toBe(anInstance);
     });
 
     it("bind to constructor", function () {
@@ -28,7 +27,6 @@ describe("examples", function () {
         });
 
         var theGreeter = module.get("greeter");
-        // console.log(theGreeter.greet()); //prints, "Hello, world!"
 
         expect(theGreeter.greet()).toBe("Hello, world!");
     });
@@ -36,7 +34,6 @@ describe("examples", function () {
     it("bind to factory function", function () {
         var aGreeting = "Hello, world!";
         var greeterFactory = function (greeting) {
-            // if this bit of code confuses you, Google, "JavaScript currying." ;-)
             return function () {
                 return greeting;
             };
@@ -48,7 +45,6 @@ describe("examples", function () {
         });
 
         var theGreeter = module.get("greeter");
-        // console.log(theGreeter()); //prints, "Hello, world!"
 
         expect(theGreeter()).toBe("Hello, world!");
     });

@@ -1,4 +1,4 @@
-var pluto = require("../lib/pluto");
+var pluto = require('../lib/pluto');
 
 describe("pluto", function () {
 
@@ -18,7 +18,7 @@ describe("pluto", function () {
                 it("throws if instance parameter is null", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toInstance(null);
+                            bind('$injected').toInstance(null);
                         });
                     }).toThrow();
                 });
@@ -26,7 +26,7 @@ describe("pluto", function () {
                 it("throws if instance parameter is undefined", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toInstance(undefined);
+                            bind('$injected').toInstance(undefined);
                         });
                     }).toThrow();
                 });
@@ -34,8 +34,8 @@ describe("pluto", function () {
                 it("throws if a mapping with the given name already exists", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toInstance({});
-                            bind("$injected").toInstance({});
+                            bind('$injected').toInstance({});
+                            bind('$injected').toInstance({});
                         });
                     }).toThrow();
                 });
@@ -44,10 +44,10 @@ describe("pluto", function () {
                 it("module.get(name) returns the instance", function () {
                     var expected = {};
                     var module = pluto.createModule(function (bind) {
-                        bind("$injected").toInstance(expected);
+                        bind('$injected').toInstance(expected);
                     });
 
-                    var actual = module.get("$injected");
+                    var actual = module.get('$injected');
                     expect(actual).toBe(expected);
                 });
             });
@@ -62,10 +62,10 @@ describe("pluto", function () {
                     }).toThrow();
                 });
 
-                it("throws if factory parameter is undefined", function () {
+                it('throws if factory parameter is undefined', function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toFactory(undefined);
+                            bind('$injected').toFactory(undefined);
                         });
                     }).toThrow();
                 });
@@ -76,8 +76,8 @@ describe("pluto", function () {
 
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toFactory(factory);
-                            bind("$injected").toFactory(factory);
+                            bind('$injected').toFactory(factory);
+                            bind('$injected').toFactory(factory);
                         });
                     }).toThrow();
                 });
@@ -85,7 +85,7 @@ describe("pluto", function () {
                 it("throws if the factory is not a function", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toFactory({});
+                            bind('$injected').toFactory({});
                         });
                     }).toThrow();
                 });
@@ -97,10 +97,10 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$injected").toFactory(factory);
+                        bind('$injected').toFactory(factory);
                     });
 
-                    var actual = module.get("$injected");
+                    var actual = module.get('$injected');
                     expect(actual).toBe(expected);
                 });
 
@@ -113,11 +113,11 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$root").toFactory(factory);
-                        bind("$param").toInstance(expectedParam);
+                        bind('$root').toFactory(factory);
+                        bind('$param').toInstance(expectedParam);
                     });
 
-                    var actual = module.get("$root");
+                    var actual = module.get('$root');
                     expect(actual.param).toBe(expectedParam);
                 });
 
@@ -125,11 +125,11 @@ describe("pluto", function () {
                     var invocationCount = 0,
                         factory = function () {
                             invocationCount++;
-                            return "dummy";
+                            return 'dummy';
                         }
 
                     var module = pluto.createModule(function (bind) {
-                       bind('$factory').toFactory(factory);
+                        bind('$factory').toFactory(factory);
                     });
 
                     module.get('$factory');
@@ -143,7 +143,7 @@ describe("pluto", function () {
                 it("throws if constructor parameter is null", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toConstructor(null);
+                            bind('$injected').toConstructor(null);
                         });
                     }).toThrow();
                 });
@@ -151,7 +151,7 @@ describe("pluto", function () {
                 it("throws if factory parameter is undefined", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toConstructor(undefined);
+                            bind('$injected').toConstructor(undefined);
                         });
                     }).toThrow();
                 });
@@ -162,8 +162,8 @@ describe("pluto", function () {
 
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toConstructor(Constructor);
-                            bind("$injected").toConstructor(Constructor);
+                            bind('$injected').toConstructor(Constructor);
+                            bind('$injected').toConstructor(Constructor);
                         });
                     }).toThrow();
                 });
@@ -171,7 +171,7 @@ describe("pluto", function () {
                 it("throws if the constructor is not a function", function () {
                     expect(function () {
                         pluto.createModule(function (bind) {
-                            bind("$injected").toConstructor({});
+                            bind('$injected').toConstructor({});
                         });
                     }).toThrow();
                 });
@@ -181,10 +181,10 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$injected").toConstructor(Constructor);
+                        bind('$injected').toConstructor(Constructor);
                     });
 
-                    var actual = module.get("$injected");
+                    var actual = module.get('$injected');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Constructor).toBeTruthy();
@@ -196,15 +196,15 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
                 });
 
                 it("when the constructor has two parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -214,17 +214,17 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
                 });
 
                 it("when the constructor has three parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -235,19 +235,19 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
                 });
 
                 it("when the constructor has four parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -259,21 +259,21 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
-                        bind("$param4").toInstance("the fourth injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
+                        bind('$param4').toInstance('the fourth injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
-                    expect(actual.param4).toBe("the fourth injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
+                    expect(actual.param4).toBe('the fourth injected parameter');
                 });
 
                 it("when the constructor has five parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -286,23 +286,23 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
-                        bind("$param4").toInstance("the fourth injected parameter");
-                        bind("$param5").toInstance("the fifth injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
+                        bind('$param4').toInstance('the fourth injected parameter');
+                        bind('$param5').toInstance('the fifth injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
-                    expect(actual.param4).toBe("the fourth injected parameter");
-                    expect(actual.param5).toBe("the fifth injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
+                    expect(actual.param4).toBe('the fourth injected parameter');
+                    expect(actual.param5).toBe('the fifth injected parameter');
                 });
 
                 it("when the constructor has six parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -316,25 +316,25 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
-                        bind("$param4").toInstance("the fourth injected parameter");
-                        bind("$param5").toInstance("the fifth injected parameter");
-                        bind("$param6").toInstance("the sixth injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
+                        bind('$param4').toInstance('the fourth injected parameter');
+                        bind('$param5').toInstance('the fifth injected parameter');
+                        bind('$param6').toInstance('the sixth injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
-                    expect(actual.param4).toBe("the fourth injected parameter");
-                    expect(actual.param5).toBe("the fifth injected parameter");
-                    expect(actual.param6).toBe("the sixth injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
+                    expect(actual.param4).toBe('the fourth injected parameter');
+                    expect(actual.param5).toBe('the fifth injected parameter');
+                    expect(actual.param6).toBe('the sixth injected parameter');
                 });
 
                 it("when the constructor has seven parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -349,27 +349,27 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
-                        bind("$param4").toInstance("the fourth injected parameter");
-                        bind("$param5").toInstance("the fifth injected parameter");
-                        bind("$param6").toInstance("the sixth injected parameter");
-                        bind("$param7").toInstance("the seventh injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
+                        bind('$param4').toInstance('the fourth injected parameter');
+                        bind('$param5').toInstance('the fifth injected parameter');
+                        bind('$param6').toInstance('the sixth injected parameter');
+                        bind('$param7').toInstance('the seventh injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
-                    expect(actual.param4).toBe("the fourth injected parameter");
-                    expect(actual.param5).toBe("the fifth injected parameter");
-                    expect(actual.param6).toBe("the sixth injected parameter");
-                    expect(actual.param7).toBe("the seventh injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
+                    expect(actual.param4).toBe('the fourth injected parameter');
+                    expect(actual.param5).toBe('the fifth injected parameter');
+                    expect(actual.param6).toBe('the sixth injected parameter');
+                    expect(actual.param7).toBe('the seventh injected parameter');
                 });
 
                 it("when the constructor has eight parameters, module.get(name) returns the result of new Constructor() with the parameters injected", function () {
@@ -385,42 +385,41 @@ describe("pluto", function () {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
-                        bind("$param1").toInstance("the first injected parameter");
-                        bind("$param2").toInstance("the second injected parameter");
-                        bind("$param3").toInstance("the third injected parameter");
-                        bind("$param4").toInstance("the fourth injected parameter");
-                        bind("$param5").toInstance("the fifth injected parameter");
-                        bind("$param6").toInstance("the sixth injected parameter");
-                        bind("$param7").toInstance("the seventh injected parameter");
-                        bind("$param8").toInstance("the eighth injected parameter");
+                        bind('$Root').toConstructor(Root);
+                        bind('$param1').toInstance('the first injected parameter');
+                        bind('$param2').toInstance('the second injected parameter');
+                        bind('$param3').toInstance('the third injected parameter');
+                        bind('$param4').toInstance('the fourth injected parameter');
+                        bind('$param5').toInstance('the fifth injected parameter');
+                        bind('$param6').toInstance('the sixth injected parameter');
+                        bind('$param7').toInstance('the seventh injected parameter');
+                        bind('$param8').toInstance('the eighth injected parameter');
                     });
 
-                    var actual = module.get("$Root");
+                    var actual = module.get('$Root');
 
                     expect(actual).toBeDefined();
                     expect(actual instanceof Root).toBeTruthy();
-                    expect(actual.param1).toBe("the first injected parameter");
-                    expect(actual.param2).toBe("the second injected parameter");
-                    expect(actual.param3).toBe("the third injected parameter");
-                    expect(actual.param4).toBe("the fourth injected parameter");
-                    expect(actual.param5).toBe("the fifth injected parameter");
-                    expect(actual.param6).toBe("the sixth injected parameter");
-                    expect(actual.param7).toBe("the seventh injected parameter");
-                    expect(actual.param8).toBe("the eighth injected parameter");
+                    expect(actual.param1).toBe('the first injected parameter');
+                    expect(actual.param2).toBe('the second injected parameter');
+                    expect(actual.param3).toBe('the third injected parameter');
+                    expect(actual.param4).toBe('the fourth injected parameter');
+                    expect(actual.param5).toBe('the fifth injected parameter');
+                    expect(actual.param6).toBe('the sixth injected parameter');
+                    expect(actual.param7).toBe('the seventh injected parameter');
+                    expect(actual.param8).toBe('the eighth injected parameter');
                 });
 
                 it("when the constructor has nine parameters, module.get(name) throws an exception", function () {
-                    var param = "-- the injected parameter --";
                     var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {
                     };
 
                     var module = pluto.createModule(function (bind) {
-                        bind("$Root").toConstructor(Root);
+                        bind('$Root').toConstructor(Root);
                     });
 
                     expect(function () {
-                        module.get("$Root");
+                        module.get('$Root');
                     }).toThrow();
                 });
 
@@ -429,13 +428,53 @@ describe("pluto", function () {
     });
 
     describe("Module", function () {
-        describe(".get(...)", function () {
+        describe(".get(name)", function () {
             it("throws if the specified name is not mapped", function () {
                 var instance = pluto.createModule(function (bind) {
                 });
                 expect(function () {
-                    instance.get("totally bogus key");
+                    instance.get('totally bogus key');
                 }).toThrow();
+            });
+        });
+
+        describe(".getAll([names])", function () {
+
+            it("accepts an array of names and returns a matching array of instances", function () {
+                var instance = pluto.createModule(function (bind) {
+                    bind('a').toInstance('A');
+                    bind('b').toInstance('B');
+                });
+
+                var actual = instance.getAll(['a', 'b']);
+                expect(actual).toEqual(['A', 'B'])
+            });
+
+            it("throws if a name is unmapped", function () {
+                var instance = pluto.createModule(function (bind) {
+                    bind('a').toInstance('A');
+                });
+
+                expect(function () {
+                    instance.getAll(['a', 'totally bogus key']);
+                }).toThrow();
+            });
+        });
+
+        describe(".eagerlyLoadAll", function () {
+            it("executes all factory and constructor functions", function () {
+                var Constructor = jasmine.createSpy('test Constructor function');
+                var factory = jasmine.createSpy('test factory function');
+
+                var instance = pluto.createModule(function (bind) {
+                    bind('Constructor').toFactory(Constructor);
+                    bind('factory').toFactory(factory);
+                });
+
+                instance.eagerlyLoadAll();
+
+                expect(Constructor).toHaveBeenCalled();
+                expect(factory).toHaveBeenCalled();
             });
         });
     });
