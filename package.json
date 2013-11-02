@@ -5,6 +5,7 @@
     "homepage": "https://github.com/ecowden/pluto.js",
     "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
     "author": "Evan Cowden <evan38109@gmail.com>",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git://github.com/ecowden/pluto.js.git"
