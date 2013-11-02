@@ -1,13 +1,12 @@
-Pluto.js: JavaScript Dependency Injection
-=========================================
+Pluto.js
+========
 
-Master
+_"JavaScript dependency injection that's so small, it almost doesn't count."_
 
-[![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js)
-
-All Branches
-
-[![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js)
+| Branch        | Status        |
+| ------------- |:-------------:|
+| Master        | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js) |
+| All           | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js) |
 
 What is Pluto?
 --------------
