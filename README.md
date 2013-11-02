@@ -23,7 +23,7 @@ project directory.
 {
     "name": "my-awesome-application",
     "dependencies": {
-        "pluto": "0.4.0",
+        "pluto": "0.4.0"
     }
 }
 ```
