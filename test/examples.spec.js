@@ -1,18 +1,19 @@
-var pluto = require("../lib/pluto");
+var pluto = require('../lib/pluto');
+var expect = require('chai').expect;
 
-describe("examples", function() {
+describe('examples', function() {
 
-  it("bind to instance", function() {
+  it('bind to instance', function() {
     var anInstance = {}; // can be any JavaScript object
     var module = pluto.createModule(function(bind) {
-      bind("myInstance").toInstance(anInstance);
+      bind('myInstance').toInstance(anInstance);
     });
 
-    expect(module.get("myInstance")).toBe(anInstance);
+    expect(module.get('myInstance')).to.eql(anInstance);
   });
 
-  it("bind to constructor", function() {
-    var aGreeting = "Hello, world!";
+  it('bind to constructor', function() {
+    var aGreeting = 'Hello, world!';
     var Greeter = function(greeting) {
       this.greeting = greeting;
     };
@@ -22,17 +23,17 @@ describe("examples", function() {
     };
 
     var module = pluto.createModule(function(bind) {
-      bind("greeting").toInstance(aGreeting);
-      bind("greeter").toConstructor(Greeter);
+      bind('greeting').toInstance(aGreeting);
+      bind('greeter').toConstructor(Greeter);
     });
 
-    var theGreeter = module.get("greeter");
+    var theGreeter = module.get('greeter');
 
-    expect(theGreeter.greet()).toBe("Hello, world!");
+    expect(theGreeter.greet()).to.eql('Hello, world!');
   });
 
-  it("bind to factory function", function() {
-    var aGreeting = "Hello, world!";
+  it('bind to factory function', function() {
+    var aGreeting = 'Hello, world!';
     var greeterFactory = function(greeting) {
       return function() {
         return greeting;
@@ -40,13 +41,13 @@ describe("examples", function() {
     };
 
     var module = pluto.createModule(function(bind) {
-      bind("greeting").toInstance(aGreeting);
-      bind("greeter").toFactory(greeterFactory);
+      bind('greeting').toInstance(aGreeting);
+      bind('greeter').toFactory(greeterFactory);
     });
 
-    var theGreeter = module.get("greeter");
+    var theGreeter = module.get('greeter');
 
-    expect(theGreeter()).toBe("Hello, world!");
+    expect(theGreeter()).to.eql('Hello, world!');
   });
 
 });

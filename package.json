@@ -3,7 +3,13 @@
   "version": "0.6.0",
   "description": "Dependency injection that's so small, it almost doesn't count.",
   "homepage": "https://github.com/ecowden/pluto.js",
-  "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
+  "keywords": [
+    "dependency",
+    "injection",
+    "di",
+    "dependency injection",
+    "testing"
+  ],
   "author": "Evan Cowden <evan38109@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -18,10 +24,12 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "jasmine-node": "1.11.0"
+    "chai": "^3.0.0",
+    "jasmine-node": "1.11.0",
+    "mocha": "^2.2.5",
   },
   "scripts": {
-    "test": "jasmine-node test",
-    "autotest": "jasmine-node --autotest ."
+    "test": "mocha --recursive",
+    "autotest": "mocha --recursive -w"
   }
 }
