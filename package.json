@@ -1,27 +1,27 @@
 {
-    "name": "pluto",
-    "version": "0.6.0",
-    "description": "Dependency injection that's so small, it almost doesn't count.",
-    "homepage": "https://github.com/ecowden/pluto.js",
-    "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
-    "author": "Evan Cowden <evan38109@gmail.com>",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/ecowden/pluto.js.git"
-    },
-    "main": "lib/pluto.js",
-    "engines": {
-        "node": ">=0.12.0"
-    },
-    "dependencies": {
-        "underscore": "1.5.2"
-    },
-    "devDependencies": {
-        "jasmine-node": "1.11.0"
-    },
-    "scripts": {
-        "test": "jasmine-node test",
-        "autotest": "jasmine-node --autotest ."
-    }
+  "name": "pluto",
+  "version": "0.6.0",
+  "description": "Dependency injection that's so small, it almost doesn't count.",
+  "homepage": "https://github.com/ecowden/pluto.js",
+  "keywords": ["dependency", "injection", "di", "dependency injection", "testing"],
+  "author": "Evan Cowden <evan38109@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ecowden/pluto.js.git"
+  },
+  "main": "lib/pluto.js",
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "dependencies": {
+    "underscore": "1.5.2"
+  },
+  "devDependencies": {
+    "jasmine-node": "1.11.0"
+  },
+  "scripts": {
+    "test": "jasmine-node test",
+    "autotest": "jasmine-node --autotest ."
+  }
 }
