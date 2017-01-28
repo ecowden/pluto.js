@@ -25,6 +25,8 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-preset-es2015-node6": "^0.4.0",
     "chai": "^3.0.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0",
@@ -33,9 +35,26 @@
     "mocha": "^2.2.5"
   },
   "scripts": {
-    "test": "mocha --recursive",
-    "autotest": "mocha --recursive -w",
+    "old-test": "mocha --recursive",
+    "old-autotest": "mocha --recursive -w",
+    "test": "ava --verbose",
+    "autotest": "ava --verbose --watch",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
+  },
+  "ava": {
+    "timeout": "1m",
+    "files": [
+      "lib/**/*Spec.js",
+      "*Spec.js"
+    ],
+    "source": [
+      "**/*.{js,jsx}"
+    ],
+    "babel": {
+      "presets": [
+        "es2015-node6"
+      ]
+    }
   }
 }
