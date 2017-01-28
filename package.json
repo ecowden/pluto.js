@@ -27,6 +27,7 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-preset-es2015-node6": "^0.4.0",
+    "coveralls": "^2.11.15",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
