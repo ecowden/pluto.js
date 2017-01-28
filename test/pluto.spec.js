@@ -1,11 +1,11 @@
-var expect = require('chai').expect
+const expect = require('chai').expect
 
-var pluto = require('../lib/pluto')
+const pluto = require('../lib/pluto')
 
 describe('pluto', function () {
   describe('pluto.createModule( ... )', function () {
     it('invokes the callback passed as the first parameter with a "bind" parameter', function () {
-      var actualBind
+      let actualBind
 
       pluto.createModule(function (bind) {
         actualBind = bind
@@ -42,12 +42,12 @@ describe('pluto', function () {
         })
 
         it('module.get(name) returns the instance', function () {
-          var expected = {}
-          var module = pluto.createModule(function (bind) {
+          const expected = {}
+          const module = pluto.createModule(function (bind) {
             bind('$injected').toInstance(expected)
           })
 
-          var actual = module.get('$injected')
+          const actual = module.get('$injected')
           expect(actual).to.eql(expected)
         })
       })
@@ -71,7 +71,7 @@ describe('pluto', function () {
         })
 
         it('throws if a mapping with the given name already exists', function () {
-          var factory = function () {}
+          const factory = function () {}
 
           expect(function () {
             pluto.createModule(function (bind) {
@@ -90,45 +90,47 @@ describe('pluto', function () {
         })
 
         it('when the factory has zero parameters, module.get(name) returns the result of the factory\'s invocation', function () {
-          var expected = {}
-          var factory = function () {
+          const expected = {}
+
+          function factory() {
             return expected
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$injected').toFactory(factory)
           })
 
-          var actual = module.get('$injected')
+          const actual = module.get('$injected')
           expect(actual).to.eql(expected)
         })
 
         it('module.get(name) injects the factory function\'s parameters, then returns the result from the factory\'s invocation', function () {
-          var expectedParam = {}
-          var factory = function ($param) {
+          const expectedParam = {}
+
+          function factory($param) {
             return {
               param: $param
             }
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$root').toFactory(factory)
             bind('$param').toInstance(expectedParam)
           })
 
-          var actual = module.get('$root')
+          const actual = module.get('$root')
           expect(actual.param).to.eql(expectedParam)
         })
 
         it('memoizes invocation so that the factory function is only invoked once', function () {
-          var invocationCount = 0
+          let invocationCount = 0
 
           function factory() {
             invocationCount++
             return 'dummy'
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$factory').toFactory(factory)
           })
 
@@ -157,7 +159,7 @@ describe('pluto', function () {
         })
 
         it('throws if a mapping with the given name already exists', function () {
-          var Constructor = function () {}
+          const Constructor = function () {}
 
           expect(function () {
             pluto.createModule(function (bind) {
@@ -176,29 +178,29 @@ describe('pluto', function () {
         })
 
         it('when the constructor has zero parameters, module.get(name) returns the result of new Constructor()', function () {
-          var Constructor = function () {}
+          const Constructor = function () {}
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$injected').toConstructor(Constructor)
           })
 
-          var actual = module.get('$injected')
+          const actual = module.get('$injected')
 
           expect(actual).to.be.defined
           expect(actual instanceof Constructor).to.be.ok
         })
 
         it('when the constructor has one parameter, module.get(name) returns the result of new Constructor() with the parameter injected', function () {
-          var Root = function ($param1) {
+          const Root = function ($param1) {
             this.param1 = $param1
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -206,18 +208,18 @@ describe('pluto', function () {
         })
 
         it('when the constructor has two parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2) {
+          const Root = function ($param1, $param2) {
             this.param1 = $param1
             this.param2 = $param2
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -226,20 +228,20 @@ describe('pluto', function () {
         })
 
         it('when the constructor has three parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3) {
+          const Root = function ($param1, $param2, $param3) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
             bind('$param3').toInstance('the third injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -249,14 +251,14 @@ describe('pluto', function () {
         })
 
         it('when the constructor has four parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3, $param4) {
+          const Root = function ($param1, $param2, $param3, $param4) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
             this.param4 = $param4
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
@@ -264,7 +266,7 @@ describe('pluto', function () {
             bind('$param4').toInstance('the fourth injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -275,7 +277,7 @@ describe('pluto', function () {
         })
 
         it('when the constructor has five parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3, $param4, $param5) {
+          const Root = function ($param1, $param2, $param3, $param4, $param5) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
@@ -283,7 +285,7 @@ describe('pluto', function () {
             this.param5 = $param5
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
@@ -292,7 +294,7 @@ describe('pluto', function () {
             bind('$param5').toInstance('the fifth injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -304,7 +306,7 @@ describe('pluto', function () {
         })
 
         it('when the constructor has six parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3, $param4, $param5, $param6) {
+          const Root = function ($param1, $param2, $param3, $param4, $param5, $param6) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
@@ -313,7 +315,7 @@ describe('pluto', function () {
             this.param6 = $param6
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
@@ -323,7 +325,7 @@ describe('pluto', function () {
             bind('$param6').toInstance('the sixth injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -336,7 +338,7 @@ describe('pluto', function () {
         })
 
         it('when the constructor has seven parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7) {
+          const Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
@@ -346,7 +348,7 @@ describe('pluto', function () {
             this.param7 = $param7
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
@@ -357,7 +359,7 @@ describe('pluto', function () {
             bind('$param7').toInstance('the seventh injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -371,7 +373,7 @@ describe('pluto', function () {
         })
 
         it('when the constructor has eight parameters, module.get(name) returns the result of new Constructor() with the parameters injected', function () {
-          var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8) {
+          const Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8) {
             this.param1 = $param1
             this.param2 = $param2
             this.param3 = $param3
@@ -382,7 +384,7 @@ describe('pluto', function () {
             this.param8 = $param8
           }
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
             bind('$param1').toInstance('the first injected parameter')
             bind('$param2').toInstance('the second injected parameter')
@@ -394,7 +396,7 @@ describe('pluto', function () {
             bind('$param8').toInstance('the eighth injected parameter')
           })
 
-          var actual = module.get('$Root')
+          const actual = module.get('$Root')
 
           expect(actual).to.be.defined
           expect(actual instanceof Root).to.be.ok
@@ -409,9 +411,9 @@ describe('pluto', function () {
         })
 
         it('when the constructor has nine parameters, module.get(name) throws an exception', function () {
-          var Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {}
+          const Root = function ($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {}
 
-          var module = pluto.createModule(function (bind) {
+          const module = pluto.createModule(function (bind) {
             bind('$Root').toConstructor(Root)
           })
 
@@ -426,7 +428,7 @@ describe('pluto', function () {
   describe('Module', function () {
     describe('.get(name)', function () {
       it('throws if the specified name is not mapped', function () {
-        var instance = pluto.createModule(function () {})
+        const instance = pluto.createModule(function () {})
         expect(function () {
           instance.get('totally bogus key')
         }).to.throw(Error)
@@ -435,17 +437,17 @@ describe('pluto', function () {
 
     describe('.getAll([names])', function () {
       it('accepts an array of names and returns a matching array of instances', function () {
-        var instance = pluto.createModule(function (bind) {
+        const instance = pluto.createModule(function (bind) {
           bind('a').toInstance('A')
           bind('b').toInstance('B')
         })
 
-        var actual = instance.getAll(['a', 'b'])
+        const actual = instance.getAll(['a', 'b'])
         expect(actual).to.eql(['A', 'B'])
       })
 
       it('throws if a name is unmapped', function () {
-        var instance = pluto.createModule(function (bind) {
+        const instance = pluto.createModule(function (bind) {
           bind('a').toInstance('A')
         })
 
@@ -457,10 +459,10 @@ describe('pluto', function () {
 
     describe('.eagerlyLoadAll', function () {
       it('executes all factory and constructor functions', function () {
-        var constructorCalled = false
-        var factoryCalled = false
+        let constructorCalled = false
+        let factoryCalled = false
 
-        var instance = pluto.createModule(function (bind) {
+        const instance = pluto.createModule(function (bind) {
           bind('Constructor').toConstructor(function FakeConstructor() {
             constructorCalled = true
           })

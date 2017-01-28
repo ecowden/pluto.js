@@ -35,7 +35,7 @@
   "scripts": {
     "test": "mocha --recursive",
     "autotest": "mocha --recursive -w",
-    "lint": "eslint",
+    "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   }
 }

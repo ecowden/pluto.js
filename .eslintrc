@@ -1,4 +1,8 @@
 {
+  "env": {
+    "node": true,
+    "es6": true
+  },
   "extends": "standard",
   "rules": {
     "space-before-function-paren": ["error", {
@@ -6,5 +10,6 @@
         "named": "never",
         "asyncArrow": "always"
       }]
-    }
+    },
+    "no-var": ["error"]
 }
