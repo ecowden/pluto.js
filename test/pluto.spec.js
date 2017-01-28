@@ -121,11 +121,12 @@ describe('pluto', function () {
         })
 
         it('memoizes invocation so that the factory function is only invoked once', function () {
-          var invocationCount = 0,
-            factory = function () {
-              invocationCount++
-              return 'dummy'
-            }
+          var invocationCount = 0
+
+          function factory() {
+            invocationCount++
+            return 'dummy'
+          }
 
           var module = pluto.createModule(function (bind) {
             bind('$factory').toFactory(factory)
@@ -460,10 +461,10 @@ describe('pluto', function () {
         var factoryCalled = false
 
         var instance = pluto.createModule(function (bind) {
-          bind('Constructor').toConstructor(function FakeConstructor () {
+          bind('Constructor').toConstructor(function FakeConstructor() {
             constructorCalled = true
           })
-          bind('factory').toFactory(function fakeFactory () {
+          bind('factory').toFactory(function fakeFactory() {
             factoryCalled = true
           })
         })
