@@ -1,6 +1,6 @@
 {
   "name": "pluto",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Dependency injection that's so small, it almost doesn't count.",
   "homepage": "https://github.com/ecowden/pluto.js",
   "keywords": [
@@ -18,18 +18,40 @@
   },
   "main": "lib/pluto.js",
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.0.0"
   },
   "dependencies": {
-    "underscore": "1.5.2"
+    "eslint": "^3.14.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
-    "jasmine-node": "1.11.0",
-    "mocha": "^2.2.5"
+    "ava": "^0.17.0",
+    "babel-preset-es2015-node6": "^0.4.0",
+    "coveralls": "^2.11.15",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "nyc": "^10.1.2"
   },
   "scripts": {
-    "test": "mocha --recursive",
-    "autotest": "mocha --recursive -w"
+    "test": "nyc ava --verbose",
+    "autotest": "ava --watch",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
+  },
+  "ava": {
+    "timeout": "1m",
+    "files": [
+      "lib/**/*Spec.js",
+      "*Spec.js"
+    ],
+    "source": [
+      "**/*.{js,jsx}"
+    ],
+    "babel": {
+      "presets": [
+        "es2015-node6"
+      ]
+    }
   }
 }
