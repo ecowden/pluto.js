@@ -17,44 +17,31 @@ Dependency injection is a spiffy way to assemble your applications. It decouples
 Installing Pluto
 ----------------
 Pluto is designed to be used with [Node](http://nodejs.org/) and [NPM](http://npmjs.org/). From the root of a Node
-project, execute
+project, execute:
 
 ```
-npm install pluto
+$ npm install pluto --save
 ```
-
-Alternately, add a line to the `dependencies` section of your `package.json` and then run `npm install` in your
-project directory.
-
-```
-{
-    "name": "my-awesome-application",
-    "dependencies": {
-        "pluto": "0.4.0"
-    }
-}
-```
-
-_Note: I'll try to keep the above version up to date, but you may want to check the
-[Pluto NPM Page](https://npmjs.org/package/pluto) for the most recent version._
 
 How to Pluto?
 -------------
 A module is the basic unit of Pluto's dependency injection. It maps names to objects you want.
 
-Pluto's injection is done in two steps. First, create a module. When you do this, you bind names to any combination of objects, factory functions and constructor functions. Second, call module.get(...) and pass a name. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the module.
+Pluto's injection is done in two steps. First, create a module. When you do this, you bind names to any combination of objects, factory functions and constructor functions. Second, call module.get(...) and pass a name. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the module and resolve Promises as appropriate.
 
 There are three things you can bind to a name: an object instance, a constructor function and a factory function.
 
 The simplest binding is to bind a name to an instance:
 
 ```  js
-var anInstance = {}; // can be any JavaScript object
-var module = pluto.createModule(function (bind) {
-    bind("myInstance").toInstance(anInstance);
-});
+const anInstance = {} // can be any JavaScript object, or a Promise
+const bind = pluto()
+bind('myInstance').toInstance(anInstance)
 
-expect(module.get("myInstance")).toBe(anInstance);
+// bind.get(...) gives us a Promise that resolves to our instance
+bind.get('myInstance').then((myInstance) => {
+  t.is(myInstance, anInstance)
+})
 ```
 
 You can also bind to a constructor function (i.e., a function that is meant to be used with the "new" keyword to create a new object). When you call module.get(...), Pluto will invoke the Constructor using "new" and return the result. If the constructor has any parameters, Pluto will consult its bindings and pass them into the constructor:
