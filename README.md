@@ -125,8 +125,8 @@ bind('greeting').toInstance('Hello')
 bind('name').toInstance(Promise.resolve('World')) // A promise will work, too
 bind('greet').toFactory(greeterFactory)
 
-bind.eagerlyLoadAll().then(app => {
-  const greet = app.get('greet') // note: it's synchronous!
+bind.bootstrap().then(app => {
+  const greet = app.get('greet') // Note: it's synchronous. Everything is ready.
   t.is(greet(), 'Hello, World!')
 })
 ```
