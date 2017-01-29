@@ -1,5 +1,4 @@
-Pluto.js
-========
+# Pluto.js
 
 _"JavaScript dependency injection that's so small, it almost doesn't count."_
 
@@ -8,14 +7,14 @@ _"JavaScript dependency injection that's so small, it almost doesn't count."_
 | Master        | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js) [![Coverage Status](https://coveralls.io/repos/github/ecowden/pluto.js/badge.svg?branch=master)](https://coveralls.io/github/ecowden/pluto.js?branch=master) |
 | All           | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js) |
 
-What is Pluto?
---------------
+## What is Pluto?
+
 Pluto is a JavaScript dependency injection tool.
 
 Dependency injection is a spiffy way to assemble your applications. It decouples the various bits and makes your app testable. An introduction to dependency injection principles is currently beyond the scope of this guide.
 
-Installing Pluto
-----------------
+## Installing Pluto
+
 Pluto is designed to be used with [Node](http://nodejs.org/) and [NPM](http://npmjs.org/). From the root of a Node
 project, execute:
 
@@ -23,13 +22,21 @@ project, execute:
 $ npm install pluto --save
 ```
 
-How to Pluto?
--------------
+## How to Pluto?
+
 A module is the basic unit of Pluto's dependency injection. It maps names to objects you want.
 
-Pluto's injection is done in two steps. First, create a module. When you do this, you bind names to any combination of objects, factory functions and constructor functions. Second, call module.get(...) and pass a name. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the module and resolve Promises as appropriate.
+Pluto's injection is done in a few steps:
+
+1. Create bindings. When you do this, you bind names to any combination of objects, factory functions and constructor functions.
+2. Call `.get(...)`. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the module and resolve Promises as appropriate.
+3. (optional) Call `.bootstrap` to run all your factory functions and constructors, and resolve all promises. This is handy if you're trying to start up an application with a bunch of moving parts.
 
 There are three things you can bind to a name: an object instance, a constructor function and a factory function.
+
+If you pass Pluto a promise, it will resolve it. If your factory function returns a promise, Pluto will resolve it before injecting the result into other components.
+
+### Instance Binding
 
 The simplest binding is to bind a name to an instance:
 
@@ -44,79 +51,82 @@ bind.get('myInstance').then((myInstance) => {
 })
 ```
 
-You can also bind to a constructor function (i.e., a function that is meant to be used with the "new" keyword to create a new object). When you call module.get(...), Pluto will invoke the Constructor using "new" and return the result. If the constructor has any parameters, Pluto will consult its bindings and pass them into the constructor:
+### Constructor Binding
 
-```  js
-var aGreeting = "Hello, world!";
-var Greeter = function (greeting) {
-    this.greeting = greeting;
-};
+You can also bind to a constructor function (i.e., a function that is meant to be used with the `new` keyword to create a new object). When you call `.get(...)`, Pluto will invoke the Constructor using `new` and return the result. If the constructor has any parameters, Pluto will consult its bindings and pass them into the constructor:
+
+```js
+function Greeter(greeting, name) {
+  this.greeting = greeting
+  this.name = name
+}
 
 Greeter.prototype.greet = function () {
-    return this.greeting;
-};
+  return `${this.greeting}, ${this.name}!`
+}
 
-var module = pluto.createModule(function (bind) {
-    bind("greeting").toInstance(aGreeting);
-    bind("greeter").toConstructor(Greeter);
-});
+const bind = pluto()
+bind('greeting').toInstance('Hello')
+bind('name').toInstance(Promise.resolve('World')) // A promise will work, too
+bind('greeter').toConstructor(Greeter)
 
-var theGreeter = module.get("greeter");
-
-expect(theGreeter.greet()).toBe("Hello, world!");
+bind.get('greeter').then((myGreeter) => {
+  t.is(myGreeter.greet(), 'Hello, World!')
+})
 ```
 
-Similarly, you can bind to a factory function -- that is, a function that creates some other object. When you call module.get(...), Pluto will invoke the function and return the result. Just like with a constructor, if the factory function has any parameters, Pluto will consult its bindings and pass them into the factory:
+### Factory Function Binding
 
-```  js
-var aGreeting = "Hello, world!";
-var greeterFactory = function (greeting) {
-    return function () {
-        return greeting;
-    };
-};
+Similarly, you can bind to a factory function -- that is, a function that creates some other object. When you call `.get(...)`, Pluto will invoke the function and return the result. Just like with a constructor, if the factory function has any parameters, Pluto will consult its bindings and pass them into the factory:
 
-var module = pluto.createModule(function (bind) {
-    bind("greeting").toInstance(aGreeting);
-    bind("greeter").toFactory(greeterFactory);
-});
+```js
+function greeterFactory(greeting, name) {
+  return function greet() {
+    return `${greeting}, ${name}!`
+  }
+}
 
-var theGreeter = module.get("greeter");
+const bind = pluto()
+bind('greeting').toInstance('Hello')
+bind('name').toInstance(Promise.resolve('World')) // A promise will work, too
+bind('greet').toFactory(greeterFactory)
 
-expect(theGreeter()).toBe("Hello, world!");
+bind.get('greet').then((greet) => {
+  t.is(greet(), 'Hello, World!')
+})
 ```
 
-Injected objects are singletons
--------------------------------
+**Author's note**: _Factory functions a super useful. I find that I use them more than any other type of binding._
 
-Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the
-same instance.
+### Injected objects are singletons
 
-Remember that singletons are only singletons within a single module, though. Different module instances -- for instance,
-created for separate test methods -- will each have their own singleton instance.
+Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the same instance.
 
-Lazy vs. Eager Loading
+Remember that singletons are only singletons within a single binder, though. Different binders -- for instance, created for separate test methods -- will each have their own singleton instance.
+
+### Eager Bootstrapping
 ----------------------
 
-By default, Pluto will only create your objects lazily. That is, factory and constructor functions will only get called
-when you ask for them with `module.get(...)`.
+By default, Pluto will only create your objects lazily. That is, factory and constructor functions will only get called when you ask for them with `.get(...)`.
 
-You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions
-which set up Express routes or which perform other application setup.
+You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions which set up Express routes or which perform other application setup.
 
-Invoke `module.eagerlyLoadAll()` after creating your module to eagerly bootstrap your application.
+Invoke `module.eagerlyLoadAll()` after creating your module to eagerly bootstrap your application. The result is a promise which resolves to a `Map` holding all bindings by name, fully resolved and injected.
 
-```
-var Constructor = jasmine.createSpy('test Constructor function');
-var factory = jasmine.createSpy('test factory function');
+```js
+function greeterFactory(greeting, name) {
+  return function greet() {
+    return `${greeting}, ${name}!`
+  }
+}
 
-var instance = pluto.createModule(function (bind) {
-    bind('Constructor').toConstructor(Constructor);
-    bind('factory').toFactory(factory);
-});
+const bind = pluto()
+bind('greeting').toInstance('Hello')
+bind('name').toInstance(Promise.resolve('World')) // A promise will work, too
+bind('greet').toFactory(greeterFactory)
 
-instance.eagerlyLoadAll();
-
-expect(Constructor).toHaveBeenCalled();
-expect(factory).toHaveBeenCalled();
+bind.eagerlyLoadAll().then(app => {
+  const greet = app.get('greet') // note: it's synchronous!
+  t.is(greet(), 'Hello, World!')
+})
 ```
