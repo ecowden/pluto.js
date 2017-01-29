@@ -24,17 +24,19 @@ $ npm install pluto --save
 
 ## How to Pluto?
 
-A module is the basic unit of Pluto's dependency injection. It maps names to objects you want.
+A binder is the basic unit of Pluto's dependency injection. It maps names to objects you want.
 
 Pluto's injection is done in a few steps:
 
 1. Create bindings. When you do this, you bind names to any combination of objects, factory functions and constructor functions.
-2. Call `.get(...)`. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the module and resolve Promises as appropriate.
-3. (optional) Call `.bootstrap` to run all your factory functions and constructors, and resolve all promises. This is handy if you're trying to start up an application with a bunch of moving parts.
+2. Optionally, call `.get(...)`. Pluto will give you the thing mapped to that name. Along the way, it will inject parameters that match other names bound in the binder and resolve Promises as appropriate.
+3. Alternately, call `.bootstrap()` to run all your factory functions and constructors, and resolve all promises. This is handy if you're trying to start up an application with a bunch of moving parts, and more common than using `.get(...)` for each part individually.
 
 There are three things you can bind to a name: an object instance, a constructor function and a factory function.
 
-If you pass Pluto a promise, it will resolve it. If your factory function returns a promise, Pluto will resolve it before injecting the result into other components.
+### Promises
+
+If you pass Pluto a promise, it will resolve it. If your factory or constructor function returns a promise, Pluto will resolve it before injecting the result into other components.
 
 ### Instance Binding
 
@@ -98,20 +100,13 @@ bind.get('greet').then((greet) => {
 
 **Author's note**: _Factory functions a super useful. I find that I use them more than any other type of binding._
 
-### Injected objects are singletons
-
-Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the same instance.
-
-Remember that singletons are only singletons within a single binder, though. Different binders -- for instance, created for separate test methods -- will each have their own singleton instance.
-
 ### Eager Bootstrapping
-----------------------
 
 By default, Pluto will only create your objects lazily. That is, factory and constructor functions will only get called when you ask for them with `.get(...)`.
 
 You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions which set up Express routes or which perform other application setup.
 
-Invoke `module.eagerlyLoadAll()` after creating your module to eagerly bootstrap your application. The result is a promise which resolves to a `Map` holding all bindings by name, fully resolved and injected.
+Invoke `.eagerlyLoadAll()` after creating your bindings to eagerly bootstrap your application. The result is a promise which resolves to a `Map` holding all bindings by name, fully resolved and injected.
 
 ```js
 function greeterFactory(greeting, name) {
@@ -130,3 +125,9 @@ bind.bootstrap().then(app => {
   t.is(greet(), 'Hello, World!')
 })
 ```
+
+### Injected Objects are Singletons
+
+Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the same instance.
+
+Remember that singletons are only singletons within a single binder, though. Different binders -- for instance, created for separate test methods -- will each have their own singleton instance.
