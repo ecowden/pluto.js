@@ -1,6 +1,6 @@
 {
   "name": "pluto",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "Dependency injection that's so small, it almost doesn't count.",
   "homepage": "https://github.com/ecowden/pluto.js",
   "keywords": [
@@ -22,13 +22,13 @@
   },
   "dependencies": {
     "co": "^4.6.0",
-    "eslint": "^3.14.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-preset-es2015-node6": "^0.4.0",
     "coveralls": "^2.11.15",
+    "eslint": "^3.14.1",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
