@@ -106,7 +106,7 @@ By default, Pluto will only create your objects lazily. That is, factory and con
 
 You may instead want them to be eagerly invoked to bootstrap your project. For instance, you may have factory functions which set up Express routes or which perform other application setup.
 
-Invoke `.eagerlyLoadAll()` after creating your bindings to eagerly bootstrap your application. The result is a promise which resolves to a `Map` holding all bindings by name, fully resolved and injected.
+Invoke `.bootstrap()` after creating your bindings to eagerly bootstrap your application. The result is a promise which resolves to a `Map` holding all bindings by name, fully resolved and injected.
 
 ```js
 function greeterFactory(greeting, name) {
