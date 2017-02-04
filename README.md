@@ -4,7 +4,7 @@ _"JavaScript dependency injection that's so small, it almost doesn't count."_
 
 | Branch        | Status        |
 | ------------- |:------------- |
-| Master        | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js) [![Coverage Status](https://coveralls.io/repos/github/ecowden/pluto.js/badge.svg?branch=master)](https://coveralls.io/github/ecowden/pluto.js?branch=master) |
+| Master        | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png?branch=master)](https://travis-ci.org/ecowden/pluto.js) [![Coverage Status](https://coveralls.io/repos/github/ecowden/pluto.js/badge.svg?branch=master)](https://coveralls.io/github/ecowden/pluto.js?branch=master) [![NSP Status](https://nodesecurity.io/orgs/ecowden/projects/ef2a53ca-7e86-47ac-8ed2-9faa50163fa0/badge)](https://nodesecurity.io/orgs/ecowden/projects/ef2a53ca-7e86-47ac-8ed2-9faa50163fa0) |
 | All           | [![Build Status](https://travis-ci.org/ecowden/pluto.js.png)](https://travis-ci.org/ecowden/pluto.js) |
 
 ## What is Pluto?
