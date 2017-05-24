@@ -131,3 +131,67 @@ bind.bootstrap().then(app => {
 Note that a factory function or constructor function is only called once. Each call to `get(...)` will return the same instance.
 
 Remember that singletons are only singletons within a single binder, though. Different binders -- for instance, created for separate test methods -- will each have their own singleton instance.
+
+## Self injection
+
+There are times when you might not know exactly what you'll need until later in runtime, and when you might want to manage injection dynamically. Pluto can inject itself to give you extra control.
+
+There are two ways to inject Pluto. Use `plutoBinder` if you want the raw binder. Use `plutoApp` when you want the fully bootstapped, synchronous app.
+
+### plutoBinder
+
+The most direct -- and safe! -- way to self-inject Pluto is to ask for `plutoBinder`. This will inject the same `bind` function that you received when invoking `pluto()`.
+
+```js
+function fakeFactory(plutoBinder) {
+  return plutoBinder.get('data') // will return a promise
+}
+
+const bind = pluto() // `bind` is the same object as `plutoBinder`, above
+bind('data').toInstance('test-data')
+bind('factory').toFactory(fakeFactory)
+
+const actual = yield bind.get('factory')
+t.is(actual, 'test-data')
+```
+
+Note that the `get(...)` and `getAll(...)` functions are asynchronous and return a `Promise`!
+
+### plutoApp
+
+When using Pluto's bootstrapping capability, you can self-inject the fully bootstrapped application under the name `plutoApp`:
+
+```js
+class Greeter {
+  constructor(plutoApp) {
+    // Note: the plutoApp Map may not be fully populated yet, since we could
+    // be at any indeterminate part of the bootstrapping process.
+    // Save it for later, but don't go using it yet.
+    this._plutoApp = plutoApp
+  }
+
+  greet() {
+    // By now, the app is fully bootstrapped and the plutoApp Map is safe
+    // to use.
+    const greeting = this._plutoApp.get('greeting')
+    return `${greeting}, World!`
+  }
+}
+
+const bind = pluto()
+bind('greeting').toInstance('Bonjour')
+bind('greeter').toConstructor(Greeter)
+
+const app = yield bind.bootstrap()
+
+const greeter = app.get('greeter')
+const actual = greeter.greet()
+t.is(actual, 'Bonjour, World!')
+```
+
+**Warning!!!***
+
+Under normal usage, this is pretty safe. There are a few corner cases to watch out for, however!
+
+1. **You _must_ call `.bootstrap()`!** If not, or if you try to get an instance before bootstrapping, the `plutoApp` variable will not be defined.
+1. **Save it for later.** The sequence in which components are instantiated during the bootstrapping process is indeterminate. While the `plutoApp` variable is guaranteed to exist, it may not be fully populated until bootstrapping is completed. It will be safe to use during "normal" operation, however. _Note: It would be easy to add a Promise that resolves when bootstrapping is complete. If you need this feature, ask for it!_
