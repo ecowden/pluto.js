@@ -1,6 +1,6 @@
 {
   "name": "pluto",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Dependency injection that's so small, it almost doesn't count.",
   "homepage": "https://github.com/ecowden/pluto.js",
   "keywords": [
