@@ -1,0 +1,64 @@
+[
+  {
+    "name": "plutoGraph",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isRoot": true,
+    "isLeaf": true,
+    "isBuiltIn": true
+  },
+  {
+    "name": "plutoBinder",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isRoot": true,
+    "isLeaf": true,
+    "isBuiltIn": true
+  },
+  {
+    "name": "greeting",
+    "parents": [
+      "greet"
+    ],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isRoot": false,
+    "isLeaf": true,
+    "isBuiltIn": false
+  },
+  {
+    "name": "greet",
+    "parents": [
+      "greeter"
+    ],
+    "children": [
+      "greeting"
+    ],
+    "bindingStrategy": "factory",
+    "isRoot": false,
+    "isLeaf": false,
+    "isBuiltIn": false
+  },
+  {
+    "name": "greeter",
+    "parents": [],
+    "children": [
+      "greet"
+    ],
+    "bindingStrategy": "constructor",
+    "isRoot": true,
+    "isLeaf": false,
+    "isBuiltIn": false
+  },
+  {
+    "name": "plutoApp",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isRoot": true,
+    "isLeaf": true,
+    "isBuiltIn": true
+  }
+]
