@@ -132,6 +132,133 @@ Note that a factory function or constructor function is only called once. Each c
 
 Remember that singletons are only singletons within a single binder, though. Different binders -- for instance, created for separate test methods -- will each have their own singleton instance.
 
+## Inspect Dependency Graph
+
+Pluto.js tracks how components are injected to help diagnose issues and aid in application discovery. The full injection graph is available for injection under the key, `plutoGraph`.
+
+Taking out Greeter example:
+
+```js
+function greetFactory(greeting) {
+  return function greet() {
+    return `${greeting}, World!`
+  }
+}
+
+class Greeter {
+  constructor(greet) {
+    this.greet = greet
+  }
+}
+
+const bind = pluto()
+bind('greeting').toInstance('Hello')
+bind('greet').toFactory(greetFactory)
+bind('greeter').toConstructor(Greeter)
+
+// Bootstrap application
+const app = yield bind.bootstrap()
+
+// Retrieve the graph. Note that this can also be injected
+// into a component directly!
+const graph = app.get('plutoGraph')
+```
+
+### `Graph` Object
+
+The `Graph` class has the following relevant methods:
+
+**.nodes**
+
+An `Array` of all `GraphNode`s.
+
+**.getNode(name)**
+
+Returns the `GraphNode` with the given name.
+
+### `GraphNode` Object
+
+The `GraphNode` class has the following relevant methods:
+
+**.name**
+
+The string name used to bind the component.
+
+**.bindingStrategy**
+
+The strategy used to bind the component for injection. One of `instance`, `factory`, or `constructor`.
+
+**.parents**
+
+A `Map` of parent nodes, with names used for keys and `GraphNode` objects for values.
+
+**.children**
+
+A `Map` of child nodes, with names used for keys and `GraphNode` objects for values.
+
+**.isBuiltIn**
+
+Returns true if the node is built in to Pluto.js, like the `plutoBinder`, `plutoApp`, or `plutoGraph` itself.
+
+### JSON Representation
+
+The graph, when converted to JSON, will be represented as a flattened `Array` of `GraphNodes`, like:
+
+```json
+[
+  {
+    "name": "plutoGraph",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  },
+  {
+    "name": "plutoBinder",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  },
+  {
+    "name": "greeting",
+    "parents": [
+      "greet"
+    ],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": false
+  },
+  {
+    "name": "greet",
+    "parents": [
+      "greeter"
+    ],
+    "children": [
+      "greeting"
+    ],
+    "bindingStrategy": "factory",
+    "isBuiltIn": false
+  },
+  {
+    "name": "greeter",
+    "parents": [],
+    "children": [
+      "greet"
+    ],
+    "bindingStrategy": "constructor",
+    "isBuiltIn": false
+  },
+  {
+    "name": "plutoApp",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  }
+]
+```
+
 ## Self injection
 
 There are times when you might not know exactly what you'll need until later in runtime, and when you might want to manage injection dynamically. Pluto can inject itself to give you extra control.

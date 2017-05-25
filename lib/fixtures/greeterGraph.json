@@ -1,0 +1,52 @@
+[
+  {
+    "name": "plutoGraph",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  },
+  {
+    "name": "plutoBinder",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  },
+  {
+    "name": "greeting",
+    "parents": [
+      "greet"
+    ],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": false
+  },
+  {
+    "name": "greet",
+    "parents": [
+      "greeter"
+    ],
+    "children": [
+      "greeting"
+    ],
+    "bindingStrategy": "factory",
+    "isBuiltIn": false
+  },
+  {
+    "name": "greeter",
+    "parents": [],
+    "children": [
+      "greet"
+    ],
+    "bindingStrategy": "constructor",
+    "isBuiltIn": false
+  },
+  {
+    "name": "plutoApp",
+    "parents": [],
+    "children": [],
+    "bindingStrategy": "instance",
+    "isBuiltIn": true
+  }
+]
