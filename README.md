@@ -170,7 +170,7 @@ The `Graph` class has the following relevant methods:
 
 **.nodes**
 
-Returns an `Array` of all `GraphNode`s.
+An `Array` of all `GraphNode`s.
 
 **.getNode(name)**
 
@@ -196,17 +196,9 @@ A `Map` of parent nodes, with names used for keys and `GraphNode` objects for va
 
 A `Map` of child nodes, with names used for keys and `GraphNode` objects for values.
 
-**.isRoot**
-
-Returns `true` if the node has zero parents.
-
-**.isLeaf**
-
-Returns `true` if the node has zero children.
-
 **.isBuiltIn**
 
-Returns true if the node is built in to pluto, like the `plutoBinder`, `plutoApp`, or `plutoGraph` itself.
+Returns true if the node is built in to Pluto.js, like the `plutoBinder`, `plutoApp`, or `plutoGraph` itself.
 
 ### JSON Representation
 
@@ -219,8 +211,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   },
   {
@@ -228,8 +218,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   },
   {
@@ -239,8 +227,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
     ],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": false,
-    "isLeaf": true,
     "isBuiltIn": false
   },
   {
@@ -252,8 +238,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
       "greeting"
     ],
     "bindingStrategy": "factory",
-    "isRoot": false,
-    "isLeaf": false,
     "isBuiltIn": false
   },
   {
@@ -263,8 +247,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
       "greet"
     ],
     "bindingStrategy": "constructor",
-    "isRoot": true,
-    "isLeaf": false,
     "isBuiltIn": false
   },
   {
@@ -272,8 +254,6 @@ The graph, when converted to JSON, will be represented as a flattened `Array` of
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   }
 ]

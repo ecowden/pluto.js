@@ -4,8 +4,6 @@
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   },
   {
@@ -13,8 +11,6 @@
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   },
   {
@@ -24,8 +20,6 @@
     ],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": false,
-    "isLeaf": true,
     "isBuiltIn": false
   },
   {
@@ -37,8 +31,6 @@
       "greeting"
     ],
     "bindingStrategy": "factory",
-    "isRoot": false,
-    "isLeaf": false,
     "isBuiltIn": false
   },
   {
@@ -48,8 +40,6 @@
       "greet"
     ],
     "bindingStrategy": "constructor",
-    "isRoot": true,
-    "isLeaf": false,
     "isBuiltIn": false
   },
   {
@@ -57,8 +47,6 @@
     "parents": [],
     "children": [],
     "bindingStrategy": "instance",
-    "isRoot": true,
-    "isLeaf": true,
     "isBuiltIn": true
   }
 ]
